@@ -1,0 +1,25 @@
+---
+- name: Create www-data group
+  group:
+    name: www-data
+    state: present
+
+- name: Create users for CentOS
+  user:
+    name: www-data
+    uid: 333
+    group: www-data
+    shell: /bin/bash
+    state: present
+    home: /var/www
+  when: ansible_distribution == 'CentOS'
+
+- name: Create users for Debian
+  user:
+    name: www-data
+    uid: 33
+    group: www-data
+    shell: /bin/bash
+    state: present
+    home: /var/www
+  when: ansible_distribution == 'Debian'

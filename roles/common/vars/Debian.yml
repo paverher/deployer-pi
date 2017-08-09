@@ -1,0 +1,3 @@
+---
+packages: [vim, atop, htop]
+locale_default: en_US.UTF-8

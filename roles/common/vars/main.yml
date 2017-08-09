@@ -1,0 +1,2 @@
+---
+common_os_packages: [git, ntp, vim, bash-completion, curl, htop, iotop, rsync, sudo, python-pip]

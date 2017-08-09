@@ -1,0 +1,19 @@
+---
+- include: playbook-invocation-directory.yml
+
+- include: discover-os-facts.yml
+
+- include: install-packages.yml
+
+- include: os-environment-configuration.yml
+
+- include: os-users-configuration.yml
+
+- include: locale.yml
+
+- include: timezone.yml
+
+- include: iptables.yml
+
+- include: scripts-deploy.yml
+  when: "env == 'live'"
