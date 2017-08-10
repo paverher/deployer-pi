@@ -1,0 +1,29 @@
+---
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Look for virtualhost templates files
+  find:
+    paths: "{{ playbook_dir }}/templates/"
+    patterns: "*.conf.j2"
+  register: find_result
+  ignore_errors: yes
+  delegate_to: 127.0.0.1
+
+- name: Setting virtualhost for project {{project}}
+  template:
+    src: "{{item.path}}"
+    dest: "{{apache_conf_path}}/sites-available/{{(item.path|basename).split('.j2')[0]}}"
+    group: root
+    owner: root
+    mode: 0644
+  with_items: "{{ find_result.files }}"
+  notify: restart apache
+
+
+- name: Creating virtualhost symlinks
+  file:
+    src: "{{apache_conf_path}}/sites-available/{{(item.path|basename).split('.j2')[0]}}"
+    dest: "{{apache_conf_path}}/sites-enabled/{{(item.path|basename).split('.j2')[0]}}"
+    state: link
+  with_items: "{{find_result.files}}"
