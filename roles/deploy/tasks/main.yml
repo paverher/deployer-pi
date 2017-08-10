@@ -1,0 +1,45 @@
+---
+###
+# Variable setting
+# Default list contains all project applications repo
+# redefinition here for deploying just one application
+# from single component deploy task in Jenkins
+
+- name: Set application list to deploy
+  set_fact:
+    project_repos:
+      - {name: "{{item.name}}", url: "{{item.url}}"}
+  with_items:
+    - "{{project_repos}}"
+  when: item.name == application and application is defined
+
+###
+# Deploying tasks
+- name: Ensure project directory existence
+  file:
+    path: /var/www/{{project}}
+    state: directory
+    mode: 0755
+    owner: www-data
+    group: www-data
+
+- name: Clone application GIT repo
+  git:
+    repo: '{{item.url}}'
+    dest: /var/www/{{ project }}/{{ item.name }}/
+    version: '{{vm_env[env].project_branch}}'
+    update: yes
+    recursive: yes
+    accept_hostkey: yes
+    track_submodules: no
+  run_once: true
+  with_items:
+    - "{{project_repos}}"
+
+- name: Configure application permissions after cloning
+  file:
+    path: /var/www/{{ project }}/
+    owner: www-data
+    group: www-data
+    mode: 0755
+    recurse: yes
