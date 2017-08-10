@@ -6,3 +6,9 @@
 - include: os-users-configuration.yml
 
 - include: locale.yml
+
+- name: Failed if variable name is undefined
+  fail:
+    msg: "Failing playbook. This role requires 'project' variable"
+  when: "'{{ project }}' is not defined"
+
