@@ -1,0 +1,27 @@
+---
+- name: Get list of hosts for MySQL root user
+  command: mysql -NBe "SELECT Host FROM mysql.user WHERE User = 'root' ORDER BY (Host='localhost') ASC"
+  register: mysql_root_hosts
+  when: mysql_installed_flag_debian.changed or mysql_installed_flag_centos.changed
+
+- name: MySQL root users configuration
+  mysql_user:
+    name: root
+    host: '{{ item }}'
+    password: '{{ project }}'
+    state: present
+  with_items: "{{ mysql_root_hosts.stdout_lines }}"
+  when: mysql_installed_flag_debian.changed or mysql_installed_flag_centos.changed
+
+- name: MySQL project user configuration
+  mysql_user:
+    name: '{{ project }}'
+    host: localhost
+    password: '{{ project }}'
+    priv: '{{ project }}.*:ALL'
+    state: present
+    login_user: root
+    login_host: localhost
+    login_password: '{{ project }}'
+
+

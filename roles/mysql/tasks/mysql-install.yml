@@ -1,0 +1,22 @@
+---
+- name: Install MySQL Debian packages
+  apt:
+    name: '{{ item }}'
+    state: installed
+  with_items: '{{ debian_mysql_packages }}'
+  when: ansible_distribution == "Debian"
+  register: mysql_installed_flag_debian
+
+- name: Install MySQL CentOS
+  yum:
+    name: '{{ item }}'
+    state: installed
+  with_items: '{{ centos_mysql_packages }}'
+  when: ansible_distribution == "CentOS"
+  register: mysql_installed_flag_centos
+
+- name: Restart MySQL
+  service:
+    name: '{{ mysql_daemon }}'
+    state: restarted
+  when: mysql_installed_flag_debian.changed or mysql_installed_flag_centos.changed

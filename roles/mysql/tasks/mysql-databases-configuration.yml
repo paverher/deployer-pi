@@ -1,0 +1,8 @@
+---
+- name: MySQL database creation
+  mysql_db:
+    name: '{{ project }}'
+    state: present
+    collation: utf8_general_ci
+    encoding: utf8
+  when: mysql_installed_flag_debian.changed or mysql_installed_flag_centos.changed
