@@ -1,4 +1,5 @@
 ---
-- hosts: '{{ target }}'
+- hosts: staging
+  become: yes
   roles:
   - common  

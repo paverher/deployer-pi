@@ -9,5 +9,5 @@
 
 - name: Failed if variable project is undefined
   fail:
-    msg: "Failing playbook. This role requires 'project' variable"
-  when: "'{{ project }}' is not defined"
+    msg: "Failing playbook. This role requires 'project' variable and the project must be in a defined list"
+  when: project is not defined or project not in possible_projects
