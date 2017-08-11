@@ -1,0 +1,5 @@
+---
+- name: Ensure correct locale configuration
+  locale_gen:
+    name: "{{locale_default}}"
+    state: present

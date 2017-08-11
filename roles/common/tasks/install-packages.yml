@@ -1,0 +1,10 @@
+---
+
+- name: Install packages
+  package:
+    name: "{{ item }}"
+    state: latest
+  retries: 3
+  delay: 3
+  with_items:
+    - "{{ packages }}"
