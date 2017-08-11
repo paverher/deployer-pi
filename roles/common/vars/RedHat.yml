@@ -1,3 +1,0 @@
----
-packages: [nload, openssl-devel, vim-enhanced, redhat-lsb]
-locale_default: 'LANG=en_US.utf8'

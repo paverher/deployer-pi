@@ -4,17 +4,7 @@
     name: www-data
     state: present
 
-- name: Create users for CentOS
-  user:
-    name: www-data
-    uid: 333
-    group: www-data
-    shell: /bin/bash
-    state: present
-    home: /var/www
-  when: ansible_distribution == 'CentOS'
-
-- name: Create users for Debian
+- name: Create user
   user:
     name: www-data
     uid: 33
