@@ -7,8 +7,7 @@
 
 - include: locale.yml
 
-- name: Failed if variable name is undefined
+- name: Failed if variable project is undefined
   fail:
     msg: "Failing playbook. This role requires 'project' variable"
   when: "'{{ project }}' is not defined"
-

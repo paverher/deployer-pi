@@ -1,26 +1,11 @@
 ---
-- name: Install epel-release repository
-  yum:
-    name: epel-release
-    state: latest
-  when: ansible_distribution == 'CentOS'
 
-- name: Install Common OS packages
+- name: Install packages
   package:
     name: "{{ item }}"
     state: latest
   retries: 3
   delay: 3
   with_items:
-    - "{{ common_os_packages }}"
+    - "{{ packages }}"
 
-#Install per OS packages
-- name: Include OS-specific variables.
-  include_vars: "{{ ansible_os_family }}.yml"
-
-- name: Ensure per OS specific packages are installed
-  package:
-    name: "{{item}}"
-    state: present
-  with_items:
-    - "{{packages}}"

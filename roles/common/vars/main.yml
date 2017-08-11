@@ -1,2 +1,3 @@
 ---
-common_os_packages: [git, ntp, vim, bash-completion, curl, htop, iotop, rsync, sudo, python-pip]
+packages: [git, ntp, vim, bash-completion, curl, htop, iotop, rsync, sudo, python-pip, vim, atop, htop]
+locale_default: en_US.UTF-8

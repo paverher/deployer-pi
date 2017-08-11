@@ -1,10 +1,5 @@
 ---
-- name: Ensure correct locale configuration | Debian
+- name: Ensure correct locale configuration
   locale_gen:
     name: "{{locale_default}}"
     state: present
-  when: ansible_os_family == 'Debian'
-
-- name: Ensure correct locale configuration | Centos
-  command: localectl set-locale {{locale_default}}
-  when: ansible_os_family == 'RedHat'
