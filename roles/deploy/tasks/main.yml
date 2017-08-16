@@ -13,7 +13,6 @@
   git:
     repo: '{{item.url}}'
     dest: /var/www/{{ project }}/{{ item.name }}/
-    version: '{{vm_env[env].project_branch}}'
     update: yes
     recursive: yes
     accept_hostkey: yes
