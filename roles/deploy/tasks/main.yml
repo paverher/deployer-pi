@@ -1,0 +1,29 @@
+---
+###
+# Deploying tasks
+- name: Ensure project directory exists
+  file:
+    path: /var/www/{{project}}
+    state: directory
+    mode: 0755
+    owner: www-data
+    group: www-data
+
+- name: Clone application GIT repo
+  git:
+    repo: '{{item}}'
+    dest: /var/www/html/{{ project }}/
+    update: yes
+    recursive: yes
+    accept_hostkey: yes
+    track_submodules: no
+  run_once: true
+  with_items:
+    - "{{project_repos}}"
+
+- name: Configure application permissions after cloning
+  file:
+    path: /var/www/html/{{ project }}/
+    owner: www-data
+    group: www-data
+    recurse: yes

@@ -1,4 +1,4 @@
 ---
 packages: [git, ntp, vim, bash-completion, curl, htop, iotop, rsync, sudo, python-pip, vim, atop, htop]
 locale_default: en_US.UTF-8
-possible_projects: [web1,web2]
+possible_projects: [project-web1,project-web2]

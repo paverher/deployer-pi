@@ -1,0 +1,8 @@
+---
+debian_mysql_packages:
+  - mysql-common
+  - mysql-server
+  - python-mysqldb
+
+mysql_daemon: mysql
+

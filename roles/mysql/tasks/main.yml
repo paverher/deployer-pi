@@ -1,0 +1,14 @@
+---
+- include_vars: "{{ ansible_distribution }}.yml"
+
+- include: mysql-install.yml
+
+- include: mysql-databases-configuration.yml
+
+- include: mysql-user-configuration.yml
+
+- name: Ensure mysql/mariadb is started and enabled
+  service:
+    name: "{{mysql_daemon}}"
+    state: started
+    enabled: yes

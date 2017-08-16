@@ -1,0 +1,9 @@
+---
+centos_mysql_packages:
+  - mariadb
+  - mariadb-server
+  - mariadb-libs
+  - MySQL-python
+  - perl-DBD-MySQL
+
+mysql_daemon: mariadb
