@@ -11,8 +11,8 @@
 
 - name: Clone application GIT repo
   git:
-    repo: '{{item.url}}'
-    dest: /var/www/{{ project }}/{{ item.name }}/
+    repo: '{{item}}'
+    dest: /var/www/html/{{ project }}/
     update: yes
     recursive: yes
     accept_hostkey: yes
@@ -23,8 +23,7 @@
 
 - name: Configure application permissions after cloning
   file:
-    path: /var/www/{{ project }}/
+    path: /var/www/html/{{ project }}/
     owner: www-data
     group: www-data
-    mode: 0755
     recurse: yes

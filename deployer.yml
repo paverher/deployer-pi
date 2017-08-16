@@ -2,4 +2,7 @@
 - hosts: staging
   become: yes
   roles:
-  - common  
+  - common
+  - apache
+  - "{{ project }}"
+  - deploy

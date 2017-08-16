@@ -1,44 +1,30 @@
 ---
-# Include variables and define needed variables.
-- name: Include OS-specific variables.
-  include_vars: Debian.yml
+- name: install apache2
+  apt: 
+    name: apache2 
+    update_cache: yes 
+    state: latest
 
-- name: Define apache_packages.
-  set_fact:
-    apache_packages: "{{ __apache_packages | list }}"
-  when: apache_packages is not defined
+- name: enabled mod_rewrite
+  apache2_module: 
+    name: rewrite
+    state: present
+  notify:
+  - restart_apache
 
-# Setup/install tasks.
-- include: setup-Debian.yml
-  static: no
+- name: apache2 listen on port {{ http_port }}
+  lineinfile: 
+    dest: /etc/apache2/ports.conf 
+    regexp: '^Listen ' 
+    line: 'Listen {{ http_port }}'
+    state: present
+  notify:
+  - restart_apache
 
-# Figure out what version of Apache is installed.
-- name: Get installed version of Apache.
-  shell: "{{ apache_daemon_path }}{{ apache_daemon }} -v"
-  changed_when: false
-  always_run: yes
-  register: _apache_version
-
-- name: Create apache_version variable.
-  set_fact:
-    apache_version: "{{ _apache_version.stdout.split()[2].split('/')[1] }}"
-
-- include_vars: apache-22.yml
-  when: "apache_version.split('.')[1] == '2'"
-
-- include_vars: apache-24.yml
-  when: "apache_version.split('.')[1] == '4'"
-
-# Configure Apache.
-- include: configure-Debian.yml
-  static: no
-
-- name: Ensure Apache has selected state and enabled on boot.
-  service:
-    name: "{{ apache_service }}"
-    state: "{{ apache_state }}"
-    enabled: yes
-
-# Install Virtualhost.
-- include: "virtualhosts-{{ ansible_os_family }}.yml"
-  static: no
+- name: apache2 virtualhost on port {{ http_port }}
+  lineinfile: 
+    dest: /etc/apache2/sites-available/000-default.conf 
+    regexp: '^<VirtualHost \*:'
+    line: '<VirtualHost *:{{ http_port }}>'
+  notify:
+  - restart_apache
