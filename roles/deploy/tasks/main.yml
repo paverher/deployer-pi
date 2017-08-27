@@ -14,6 +14,7 @@
     repo: '{{item}}'
     dest: /var/www/html/{{ project }}/
     update: yes
+    force: yes
     recursive: yes
     accept_hostkey: yes
     track_submodules: no

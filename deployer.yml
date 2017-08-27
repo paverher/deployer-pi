@@ -1,5 +1,5 @@
 ---
-- hosts: staging
+- hosts: "{{ project  }}"
   become: yes
   roles:
   - common
