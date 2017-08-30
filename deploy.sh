@@ -3,8 +3,8 @@
 project="project-web1"
 
 #yellow light
-
-ansible-playbook deployer.yml -e "project=$project" &>/tmp/ansiblexecution.log
+export ANSIBLE_CONFIG="/home/pablo.vera/Documents/tfg/ansible.cfg"
+ansible-playbook /home/pablo.vera/Documents/tfg/deployer.yml -e "project=$project" &>/tmp/ansiblexecution.log
 ret=$?
 if [ $ret -ne 0 ]; then
     #red light
