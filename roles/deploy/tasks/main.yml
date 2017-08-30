@@ -1,14 +1,6 @@
 ---
 ###
 # Deploying tasks
-- name: Ensure project directory exists
-  file:
-    path: /var/www/{{project}}
-    state: directory
-    mode: 0755
-    owner: www-data
-    group: www-data
-
 - name: Clone application GIT repo
   git:
     repo: '{{item}}'
@@ -28,3 +20,9 @@
     owner: www-data
     group: www-data
     recurse: yes
+
+- name: Change default DocumentRoot
+  lineinfile:
+    path: /etc/apache2/sites-available/000-default.conf
+    regexp: "^DocumentRoot /var/www/html"
+    line: "^DocumentRoot /var/www/html/{{ project }}"
