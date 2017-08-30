@@ -23,6 +23,6 @@
 
 - name: Change default DocumentRoot
   lineinfile:
-    path: /etc/apache2/sites-available/000-default.conf
+    dest: /etc/apache2/sites-available/000-default.conf
     regexp: "^DocumentRoot /var/www/html"
     line: "^DocumentRoot /var/www/html/{{ project }}"
